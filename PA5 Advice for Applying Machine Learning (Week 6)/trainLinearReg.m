@@ -16,6 +16,7 @@ costFunction = @(t) linearRegCostFunction(X, y, t, lambda);
 options = optimset('MaxIter', 200, 'GradObj', 'on');
 
 % Minimize using fmincg
+
 theta = fmincg(costFunction, initial_theta, options);
 
 end

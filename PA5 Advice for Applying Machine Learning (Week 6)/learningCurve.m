@@ -34,6 +34,13 @@ error_val   = zeros(m, 1);
 %       For the cross-validation error, you should instead evaluate on
 %       the _entire_ cross validation set (Xval and yval).
 %
+% For Xval/yval.
+for i = 1:m
+    [theta] = trainLinearReg(X(1:i,:),y(1:i),lambda);
+    error_train(i)=linearRegCostFunction(X(1:i,:),y(1:i),theta,0);
+    error_val(i)=linearRegCostFunction(Xval,yval,theta,0);
+end
+
 % Note: If you are using your cost function (linearRegCostFunction)
 %       to compute the training and cross validation error, you should 
 %       call the function with the lambda argument set to 0. 
