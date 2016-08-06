@@ -17,11 +17,10 @@ for iter = 1:num_iters
     %       of the cost function (computeCost) and gradient here.
     %
 
-
-
-
-
-
+    % calculation of theta parameters' variations
+    delta = alpha * (1/m * X' * (X * theta - y));
+    % assignmenta of new theta values
+    theta = theta - delta;
 
     % ============================================================
 
