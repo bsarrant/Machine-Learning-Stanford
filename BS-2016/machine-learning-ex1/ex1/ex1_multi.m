@@ -105,8 +105,14 @@ fprintf('\n');
 % Recall that the first column of X is all-ones. Thus, it does
 % not need to be normalized.
 price = 0; % You should change this
-price = [1 1650 3 ] * theta;
 
+% old code : forgot to normalize features before predicting prices ==>
+% estimated price > 100m$
+% price = [1 1650 3 ] * theta;
+
+features = [1 1650 3 ]  ;
+features_normalized = ( features - [ 0 mu(1,:) ] ) ./ [ 1 sigma(1,:) ] ; 
+price = features_normalized * theta;
 
 % ============================================================
 
