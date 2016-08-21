@@ -49,6 +49,14 @@ X = [ones(m, 1) X];
 %                 initial_theta, options);
 %
 
+initial_theta=zeros(1,n+1)';
+options=optimset('MaxIter', 100); 
+lrCostFunction(initial_theta, X, (y==1), lambda)
+for c = 1:num_labels
+    objFunc = @(t) lrCostFunction(t, X, y==c, lambda);
+    [res, functionVal, iteration] = fmincg(@(t)(lrCostFunction(t, X, (y == c), lambda)), initial_theta, options);
+    all_theta(c,:)=res;
+end
 
 
 

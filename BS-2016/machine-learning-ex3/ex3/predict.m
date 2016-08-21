@@ -21,6 +21,15 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
+% adding bias units
+X = [ones(m, 1) X];
+% predit layer 1
+L1 = sigmoid (Theta1 * X'); 
+L1 = [ones(1,m); L1];
+% predict layer 2
+proba = sigmoid (Theta2 * L1); 
+[v, p] = max(proba);
+p = p';
 
 
 
