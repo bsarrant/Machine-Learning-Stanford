@@ -62,22 +62,28 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+m           = size(X, 1);
+             
+% definitions / calculations of key variables during forward propagation:
+a1 = [ones(m, 1) X];
+z2 = Theta1 * a1';
+a2 = [ones(m,1) sigmoid(z2)'];
+z3 = Theta2 * a2';
+a3 = sigmoid(z3);
+all_combos = eye(num_labels);    
+y_matrix = all_combos(y,:);
 
+% cost function calculation with regularization (if lambda != 0):
+reg = lambda/(2*m)*(sum(sum(Theta1(:,2:end).^2))+sum(sum(Theta2(:,2:end).^2)));
+J = -1/m*( trace( log(a3)*y_matrix + log(1-a3)*(1-y_matrix) ) ) + reg;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+% gradients calculation:
+d3 =  a3' - y_matrix;
+d2 = (d3 * Theta2(:,2:end)).*sigmoidGradient(z2');
+delta3 = d3' * a2;
+delta2 = d2' * a1;
+Theta2_grad = delta3 / m + [zeros(num_labels,1) lambda/m*Theta2(:,2:end)];
+Theta1_grad = delta2 / m + [zeros(hidden_layer_size,1) lambda/m*Theta1(:,2:end)];
 
 
 % -------------------------------------------------------------
