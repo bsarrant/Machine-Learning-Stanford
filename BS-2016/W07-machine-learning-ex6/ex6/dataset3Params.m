@@ -23,6 +23,21 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+crossValCSigma = zeros(8);
+value = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+
+
+for c = 1:8
+    for s = 1:8
+        model= svmTrain(X, y, value(c), @(x1, x2) gaussianKernel(x1, x2, value(s)));
+        predictions = svmPredict(model, Xval);
+        crossValCSigma(c,s) = mean(double(predictions ~= yval));
+    end
+end
+
+[i, j] = find(crossValCSigma==min(min(crossValCSigma)));
+C = value(i);
+sigma=value(j); 
 
 
 
